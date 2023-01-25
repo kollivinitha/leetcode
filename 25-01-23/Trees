@@ -1,0 +1,118 @@
+104.Maximum Depth of Binary Tree
+
+Question:
+      Given the root of a binary tree, return its maximum depth.A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+solution:
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if(root==null)
+        {
+            return 0;
+        }
+        int left=maxDepth(root.left);
+        int right=maxDepth(root.right);
+        return (Math.max(left,right)+1);
+    }
+}
+
+110. Balanced Binary Tree
+
+Question:
+      Given a binary tree, determine if it is height-balanced.
+Solution:
+class Solution {
+    public int height(TreeNode root)
+        {
+            if(root==null)
+            {
+                return 0;
+            }
+            int left=height(root.left);
+            int right=height(root.right);
+            return Math.max(left,right)+1;
+        }
+    public boolean isBalanced(TreeNode root) {
+        int d;
+        if(root == null)
+        {
+            return true;
+        }
+        if(isBalanced(root.left) && isBalanced(root.right))
+        {
+            d=height(root.left)-height(root.right);
+            return(d == 0 || d==1 || d==-1);
+        }
+        return false;
+    }
+}
+
+236. Lowest Common Ancestor of a Binary Tree
+Question:
+    Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
+    According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
+Solution:
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root==null)
+        {
+            return null;
+        }
+        else if(root==p || root==q)
+        {
+            return root;
+        }
+        else
+        {
+            TreeNode left = lowestCommonAncestor(root.left,p,q);
+            TreeNode right = lowestCommonAncestor(root.right, p,q);
+            if(left==null && right==null)
+            {
+                return null;
+            }
+            else if(left==null){
+                return right;
+            }
+            else if(right==null){
+                return left;
+            }
+            return root;
+        }
+    }
+}
+
+101:Symmetric tree
+Question:
+      Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+Solution:
+class Solution {
+    public boolean traversal(TreeNode root1,TreeNode root2)
+    {
+        if(root1== null && root2 == null)
+        {
+            return true;
+        }
+        else if(root1 == null || root2==null )
+        {
+            return false;
+        }
+        else if(root1.val != root2.val)
+        {
+            return false;
+        }
+        boolean a=traversal(root1.left,root2.right);
+        boolean b=traversal(root1.right,root2.left);
+        if(a && b)
+        {
+            return true;
+        }
+        return false;
+    }
+    public boolean isSymmetric(TreeNode root) {
+        if(root!=null)
+        {
+            return traversal(root.left,root.right);
+        }
+        return false;
+
+    }
+}
