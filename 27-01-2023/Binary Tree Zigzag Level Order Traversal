@@ -1,0 +1,44 @@
+Question:
+Given the root of a binary tree, return the zigzag level order traversal of its nodes' values. (i.e., from left to right, then right to left for the next level and alternate between).
+
+Solution:
+class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        List<List<Integer>> l = new ArrayList<>();
+        boolean forward=true;
+        if(root==null)
+        {
+            return l;
+        }
+        queue.add(root);
+        while(!queue.isEmpty())
+        {
+            int s=queue.size();
+            List<Integer> list = new ArrayList<>();
+            for(int i=0;i<s;i++)
+            {
+                TreeNode curr = queue.poll();
+                if(forward)
+                {
+                    list.add(curr.val);
+                }
+                else
+                {
+                    list.add(0,curr.val);
+                }
+                if(curr.left != null)
+                {
+                    queue.offer(curr.left);
+                }
+                if(curr.right != null)
+                {
+                    queue.offer(curr.right);
+                }
+            }
+            l.add(list);
+            forward=!(forward);
+        }
+        return l;
+    }
+}
