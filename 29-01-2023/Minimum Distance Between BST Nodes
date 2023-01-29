@@ -1,0 +1,45 @@
+Question:
+Given the root of a Binary Search Tree (BST), return the minimum difference between the values of any two different nodes in the tree.
+Solution:
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public void inorder(TreeNode root,List<Integer> list)
+    {
+        if(root==null)
+        {
+            return;
+        }
+        inorder(root.left,list);
+        list.add(root.val);
+        inorder(root.right,list);
+    }
+    public int minDiffInBST(TreeNode root) {
+        List<Integer> arr = new ArrayList<>();
+        inorder(root,arr);
+        int m=Integer.MAX_VALUE;
+        for(int i=1;i<arr.size();i++)
+        {
+            int a=arr.get(i);
+            int b=arr.get(i-1);
+            if(a-b<m)
+            {
+                m=a-b;
+            }
+        }
+        return m;
+    }
+}
