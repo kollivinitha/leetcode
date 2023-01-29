@@ -1,0 +1,31 @@
+Question:
+Given the root node of a binary search tree and two integers low and high, return the sum of values of all nodes with a value in the inclusive range [low, high].
+
+Solution:
+class Solution {
+    public void inorder(TreeNode root,List<Integer>list)
+    {
+        if(root == null)
+        {
+            return;
+        }
+        inorder(root.left,list);
+        list.add(root.val);
+        inorder(root.right,list);
+    }
+    public int rangeSumBST(TreeNode root, int low, int high) {
+        List<Integer> l=new ArrayList<>();
+        inorder(root,l);
+        int sum=0;
+        int s = l.size();
+        for(int i=0;i<s;i++)
+        {
+            int a=l.get(i);
+            if(a>=low && a<=high)
+            {
+                sum+=a;
+            }
+        }
+        return sum;
+    }
+}
