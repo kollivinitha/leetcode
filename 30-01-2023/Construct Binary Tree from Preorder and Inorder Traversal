@@ -1,0 +1,49 @@
+
+Question:
+Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree, construct and return the binary tree.
+
+Solution:
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode build(int[] preorder,int[] inorder, int prestart,int preend,int instart,int inend,HashMap<Integer,Integer> map)
+    {
+        if(prestart>preend || instart>inend)
+        {
+            return null;
+        }
+        TreeNode root = new TreeNode(preorder[prestart]);
+        int a=map.get(root.val);
+        int m=a-instart;
+        root.left=build(preorder,inorder,prestart+1,prestart+m,instart,a-1,map);
+        root.right=build(preorder,inorder,prestart+m+1,preend,a+1,inend,map);
+        return root;
+    }
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for(int i=0;i<inorder.length;i++)
+        {
+            map.put(inorder[i],i);
+        }
+        int n=preorder.length;
+        int prestart=0;
+        int preend=n-1;
+        int instart=0;
+        int inend=n-1;
+        TreeNode node = build(preorder,inorder,prestart,preend,instart,inend,map);
+        return node;
+    }
+}
