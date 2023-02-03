@@ -1,0 +1,86 @@
+Question:
+Given a root node reference of a BST and a key, delete the node with the given key in the BST. Return the root node reference (possibly updated) of the BST.
+
+Basically, the deletion can be divided into two stages:
+
+Search for a node to remove.
+If the node is found, delete the node.
+
+Solution:
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode deleteNode(TreeNode root, int key) {
+        TreeNode temp=root;
+        if(root == null)
+        {
+            return null;
+        }
+        if(root.val==key)
+        {
+            return getNode(root);
+        }
+        while(root != null)
+        {
+            if(key<root.val)
+            {
+                if(root.left != null && root.left.val==key)
+                {
+                    root.left=getNode(root.left);
+        
+                }
+                else{
+                    root=root.left;
+                }
+            }
+            else
+            {
+                if(root.right != null && root.right.val==key)
+                {
+                
+                    root.right=getNode(root.right);
+                }else
+                {
+                root=root.right;
+                }
+            }
+        }
+        return temp;
+    }
+    public TreeNode getNode(TreeNode root)
+    {
+        if(root.left == null)
+        {
+            return root.right; 
+        }
+        else if(root.right == null)
+        {
+            return root.left;
+        }
+        TreeNode righttree=root.right;
+        TreeNode lefttree=findMax(root.left);
+        lefttree.right=righttree;
+        return root.left;
+    }
+    public TreeNode findMax(TreeNode root)
+    {
+        while(root.right != null)
+        {
+            root=root.right;
+        }
+        return root;
+    }
+}
